@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# editor
+.vscode/
+
+# local working files (drafts, backups, explorations)
+_backup/
+variants/

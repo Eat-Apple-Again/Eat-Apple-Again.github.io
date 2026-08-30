@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jim Xiao · Machine Learning Engineer</title>
+  <meta name="description" content="Hao-Tian (Jim) Xiao — Machine Learning Engineer at QCT. Agentic systems, machine learning, and computer vision.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    [data-theme="dark"]{
+      --bg:#14171c; --surface:#1b1f27; --surface-2:#222735;
+      --text:#e7ebf1; --dim:#9aa4b3; --mute:#69727f;
+      --accent:#a8f0cf; --accent-soft:rgba(168,240,207,.1); --accent-line:rgba(168,240,207,.22);
+      --border:rgba(255,255,255,.09);
+    }
+    [data-theme="light"]{
+      --bg:#f6f1e9; --surface:#fffdf9; --surface-2:#fbf6ec;
+      --text:#2b2620; --dim:#6f6657; --mute:#a99f8d;
+      --accent:#1a6b54; --accent-soft:rgba(26,107,84,.07); --accent-line:rgba(26,107,84,.25);
+      --border:#e6ddcd;
+    }
+    :root{--max:760px; --sans:'Inter',sans-serif; --mono:'JetBrains Mono',monospace; --serif:'Fraunces',serif}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.7;
+      -webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+    a{color:var(--accent);text-decoration:none}
+    .topbar{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border)}
+    .tb-in{max-width:var(--max);margin:0 auto;padding:16px 24px;display:flex;align-items:center}
+    .tb-name{font-family:var(--mono);font-weight:500;font-size:16px;color:var(--accent);letter-spacing:.02em}
+    .toggle{margin-left:auto;font-family:var(--mono);font-size:12px;cursor:pointer;background:var(--surface);
+      border:1px solid var(--border);color:var(--dim);padding:7px 13px;border-radius:20px;display:flex;gap:7px;align-items:center;transition:.2s}
+    .toggle:hover{color:var(--text);border-color:var(--accent-line)}
+    .tabs{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;gap:6px;border-bottom:1px solid var(--border)}
+    .tab{font-family:var(--mono);font-size:14px;cursor:pointer;background:none;border:none;color:var(--dim);
+      padding:16px 14px;border-bottom:2px solid transparent;transition:.2s;margin-bottom:-1px}
+    .tab:hover{color:var(--text)}
+    .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+    main{max-width:var(--max);margin:0 auto;padding:0 24px}
+    .panel{display:none;padding:40px 0 80px;animation:fade .35s ease}
+    .panel.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    /* hero */
+    .hero{text-align:center;padding-bottom:8px}
+    .greet{font-family:var(--mono);color:var(--accent);font-size:14px;margin-bottom:10px}
+    .namecloud{height:170px}
+    .namecloud canvas{width:100%;height:100%;display:block}
+    .aka{font-family:var(--mono);font-size:15px;color:var(--dim);margin-top:2px;letter-spacing:.02em}
+    .aka b{color:var(--text);font-weight:500}
+    .role-title{font-size:clamp(17px,3vw,20px);color:var(--accent);font-weight:600;margin-top:10px}
+    .bio{font-size:17px;color:var(--dim);margin:18px auto 0;max-width:560px;line-height:1.8;text-align:left}
+    .bio b{color:var(--text);font-weight:600}
+    .links{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;justify-content:center}
+    .btn{font-family:var(--mono);font-size:14px;font-weight:500;padding:10px 20px;border-radius:10px;
+      background:var(--accent);color:var(--bg);transition:.2s}
+    .btn:hover{opacity:.88;transform:translateY(-2px)}
+    .btn.out{background:transparent;color:var(--accent);border:1px solid var(--accent-line)}
+    .btn.out:hover{background:var(--accent-soft)}
+    .sec-title{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;
+      display:flex;align-items:center;gap:14px;margin:38px 0 22px}
+    .sec-title::after{content:'';flex:1;border-top:1px solid var(--border)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:14px;transition:.2s}
+    .card:hover{border-color:var(--accent-line)}
+    .card-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+    .role{font-size:18px;font-weight:600;color:var(--text)}
+    .org{font-size:14px;color:var(--accent)}
+    .when{color:var(--mute);font-style:italic;font-size:12px}
+    .date{font-family:var(--mono);font-size:13px;color:var(--mute);white-space:nowrap}
+    .card ul{list-style:none;margin-top:4px}
+    .card li{font-size:15px;color:var(--dim);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.6}
+    .card li::before{content:'–';position:absolute;left:0;color:var(--accent)}
+    .award{font-family:var(--mono);font-size:13px;color:var(--accent);margin-top:8px}
+    .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+    .tags span{font-family:var(--mono);font-size:12px;color:var(--accent);background:var(--accent-soft);
+      border:1px solid var(--accent-line);border-radius:7px;padding:3px 10px}
+    .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .pcard{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;
+      display:flex;flex-direction:column;transition:.2s}
+    .pcard:hover{border-color:var(--accent-line);transform:translateY(-3px)}
+    .pmedia{height:120px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+      font-size:12px;color:var(--mute);background:var(--accent-soft);border-bottom:1px solid var(--border)}
+    .pbody{padding:20px;display:flex;flex-direction:column;flex:1}
+    .phead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .ptitle{font-size:16px;font-weight:600}
+    .plink{font-family:var(--mono);font-size:13px;color:var(--accent);white-space:nowrap}
+    .pmeta{font-family:var(--mono);font-size:12px;color:var(--mute);margin:4px 0 10px}
+    .pdesc{font-size:14px;color:var(--dim);line-height:1.65;flex:1;margin-bottom:14px}
+    .contact-row{display:flex;gap:24px;flex-wrap:wrap;margin-top:6px}
+    .contact-row a{font-family:var(--mono);font-size:14px;color:var(--dim)}
+    .contact-row a:hover{color:var(--accent)}
+    footer{border-top:1px solid var(--border);text-align:center;padding:24px;font-family:var(--mono);
+      font-size:12px;color:var(--mute)}
+    @media(max-width:600px){
+      .pgrid{grid-template-columns:1fr}
+      .tab{padding:14px 10px;font-size:13px}
+      .card-head{flex-direction:column;gap:4px}
+      .namecloud{height:130px}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="tb-in">
+      <span class="tb-name" id="tbName"></span>
+      <button class="toggle" id="themeToggle"><span id="themeIcon">☾</span> <span id="themeLabel">dark</span></button>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" data-view="about">About</button>
+    <button class="tab" data-view="experience">Experience</button>
+    <button class="tab" data-view="projects">Projects</button>
+  </div>
+  <main>
+    <section class="panel active" id="about"></section>
+    <section class="panel" id="experience"></section>
+    <section class="panel" id="projects"></section>
+  </main>
+
+  <script>
+  // my information
+  const DATA = {
+    profile: {
+      cloudName:  "Jim Xiao",
+      formalName: "Hao-Tian Xiao",
+      zhName:     "蕭皓天",
+      title:      "Machine Learning Engineer",
+      bio:  "This site is still a draft.",
+      links: {
+        github:   "https://github.com/Eat-Apple-Again",
+        linkedin: "https://www.linkedin.com/in/eat-apple-again/",
+        email:    ""
+      }
+    },
+
+    education: [
+      { role: "M.S. · Computer Science & Engineering", org: "National Taiwan Ocean University", date: "2022 — 2024",
+        bullets: ["Research in CV (semantic segmentation) & ML & System Integration (patent granted)"] },
+      { role: "B.S. · Computer Science & Engineering", org: "National Taiwan Ocean University", date: "2018 — 2022" }
+    ],
+
+    experience: [
+      { role: "Software and ML Engineer", org: "Quanta Cloud Technology (QCT)", date: "2024.09 — Present",
+        bullets: [
+          "Build agentic systems on NVIDIA NeMo Agent Toolkit's multi-agent architecture, applying AI to real software-engineering workflows. A production deployment already serves ~100 internal users.",
+          "Extend SOTA models for semantic/instance segmentation and image/video understanding. Currently designing detailed pipeline architecture on NVIDIA's Video Search and Summarization (VSS) framework.",
+          "On QCT/Quanta GPU servers, own inference performance tuning for production LLM/VLM services, standardizing on vLLM after evaluating alternative serving frameworks (NVIDIA NIM, TensorRT-LLM, Ollama, llama.cpp). Profile and optimize TTFT, throughput, and end-to-end latency under real concurrent-user workloads."
+        ],
+        tags: ["Agentic AI", "vLLM", "TensorRT-LLM", "PyTorch"] },
+
+      { role: "Research Intern · 5G + AI", when: "during M.S.", org: "Quanta Cloud Technology (QCT)", date: "2023.06 — 11",
+        bullets: [
+          "Built NWDAF on free5GC to collect UE & network metrics",
+          "LSTM / Transformer traffic prediction for dynamic network slicing"
+        ],
+        award: "🏅 Merit Award · 資策會 (III) 5G Competition",
+        tags: ["5G Core", "free5GC", "LSTM", "Transformer"] },
+
+      { role: "CV Project Lead · Fisheries Agency", when: "during M.S.", org: "Fisheries Agency × NTOU", date: "2022 — 2024",
+        bullets: [
+          "SAM-based aquaculture feeding monitoring deployed on land-based farms",
+          "Real-time fish-satiation estimation · patent granted · M.S. thesis"
+        ],
+        tags: ["SAM", "Segmentation", "PyTorch"] },
+
+      { role: "Teaching Assistant", org: "NTOU · CSE", date: "2019 — 2024",
+        bullets: ["Machine Learning, Machine Vision, Programming & Lab (C/C++), General Physics"] }
+    ],
+
+    projects: [
+      { title: "Aquaculture Feeding Monitoring",
+        link:  { label: "GitHub ↗", url: "https://github.com/Eat-Apple-Again/RipplesDetection" },
+        meta:  "2022—2024 · M.S. thesis · Patent",
+        desc:  "CV system for fish farmers. SAM-based semantic segmentation reads water-ripple patterns to estimate fish satiation in real time. Fisheries-Agency-funded; deployed on real farms.",
+        tags:  ["SAM", "Segmentation", "PyTorch"] },
+
+      { title: "5G Network Slicing via NWDAF",
+        meta:  "2023 · Merit Award, 資策會",
+        desc:  "NWDAF on free5GC collecting 5G Core metrics. LSTM / Transformer traffic prediction enabling dynamic network slice allocation to improve QoS.",
+        tags:  ["5G Core", "LSTM", "Transformer"] }
+    ]
+  };
+  const card = x => `
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="role">${x.role}${x.when ? ` <span class="when">${x.when}</span>` : ''}</div>
+          <div class="org">${x.org}</div>
+        </div>
+        <span class="date">${x.date}</span>
+      </div>
+      ${x.bullets?.length ? `<ul>${x.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
+      ${x.award ? `<div class="award">${x.award}</div>` : ''}
+      ${x.tags?.length ? `<div class="tags">${x.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
+    </div>`;
+
+  const project = p => `
+    <div class="pcard">
+      <div class="pmedia">${p.media || '{ } demo image'}</div>
+      <div class="pbody">
+        <div class="phead">
+          <span class="ptitle">${p.title}</span>
+          ${p.link ? `<a class="plink" href="${p.link.url}" target="_blank">${p.link.label}</a>` : ''}
+        </div>
+        <div class="pmeta">${p.meta}</div>
+        <div class="pdesc">${p.desc}</div>
+        ${p.tags?.length ? `<div class="tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
+      </div>
+    </div>`;
+
+  function render(){
+    const p = DATA.profile;
+    document.title = `${p.cloudName} · ${p.title}`;
+    document.getElementById('tbName').textContent = p.cloudName;
+
+    document.getElementById('about').innerHTML = `
+      <div class="hero">
+        <p class="greet">Hi, I'm</p>
+        <div class="namecloud"><canvas id="nameCanvas"></canvas></div>
+        <p class="aka"><b>${p.formalName}</b> · ${p.zhName}</p>
+        <p class="role-title">${p.title}</p>
+      </div>
+      <p class="bio">${p.bio}</p>
+      <div class="links">
+        <a class="btn" href="${p.links.github}" target="_blank">GitHub</a>
+        <a class="btn out" href="${p.links.linkedin}" target="_blank">LinkedIn</a>
+        ${p.links.resume ? `<a class="btn out" href="${p.links.resume}" target="_blank">Resume ↓</a>` : ''}
+      </div>
+      <p class="sec-title">Education</p>
+      ${DATA.education.map(card).join('')}
+      <p class="sec-title">Contact</p>
+      <div class="contact-row">
+        ${p.links.email ? `<a href="mailto:${p.links.email}">${p.links.email}</a>` : ''}
+        <a href="${p.links.github}" target="_blank">GitHub</a>
+        <a href="${p.links.linkedin}" target="_blank">LinkedIn</a>
+      </div>`;
+
+    document.getElementById('experience').innerHTML =
+      `<p class="sec-title">Experience</p>` + DATA.experience.map(card).join('');
+
+    document.getElementById('projects').innerHTML =
+      `<p class="sec-title">Featured Projects</p><div class="pgrid">` +
+      DATA.projects.map(project).join('') + `</div>`;
+  }
+  render();
+
+  // name particle cloud: sample the name to points, settle into place on load
+  const canvas = document.getElementById('nameCanvas'), ctx = canvas.getContext('2d');
+  let W, H, parts = [];
+  const themePC = () => document.documentElement.dataset.theme === 'light' ? [26,107,84] : [168,240,207];
+  let pc = themePC();
+
+  function buildCloud(){
+    if(!canvas.clientWidth) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = W*dpr; canvas.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    const off = document.createElement('canvas'); off.width = W; off.height = H;
+    const ox = off.getContext('2d');
+    ox.fillStyle = '#fff'; ox.textAlign = 'center'; ox.textBaseline = 'middle';
+    ox.font = '800 ' + Math.min(W*0.19, 100) + 'px Inter, sans-serif';
+    ox.fillText(DATA.profile.cloudName, W/2, H/2);
+    const img = ox.getImageData(0,0,W,H).data;
+    parts = []; const gap = Math.max(3, Math.round(W/240));
+    for(let yy=0; yy<H; yy+=gap) for(let xx=0; xx<W; xx+=gap){
+      if(img[(yy*W+xx)*4+3] > 128) parts.push({hx:xx, hy:yy, x:Math.random()*W, y:Math.random()*H, vx:0, vy:0});
+    }
+  }
+  function tick(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of parts){
+      p.vx += (p.hx-p.x)*0.012; p.vy += (p.hy-p.y)*0.012;
+      p.vx *= 0.86; p.vy *= 0.86; p.x += p.vx; p.y += p.vy;
+      const sp = Math.min(Math.abs(p.vx)+Math.abs(p.vy), 6), a = (0.55 + sp*0.075).toFixed(2);
+      ctx.fillStyle = `rgba(${pc[0]},${pc[1]},${pc[2]},${a})`;
+      ctx.fillRect(p.x, p.y, 1.8, 1.8);
+    }
+    requestAnimationFrame(tick);
+  }
+  window.addEventListener('resize', buildCloud);
+  buildCloud(); tick();
+
+  // 切換分頁
+  document.querySelectorAll('.tab').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById(b.dataset.view).classList.add('active');
+    if(b.dataset.view === 'about') buildCloud();
+  }));
+
+  // 切換暗色和亮色
+  const root = document.documentElement, icon = document.getElementById('themeIcon'), label = document.getElementById('themeLabel');
+  function applyTheme(t){ root.dataset.theme = t; icon.textContent = t === 'dark' ? '☾' : '☀'; label.textContent = t; pc = themePC(); }
+  applyTheme(localStorage.getItem('theme') || 'dark');
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(next); localStorage.setItem('theme', next);
+  });
+  </script>
+</body>
+</html>
