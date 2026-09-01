@@ -135,7 +135,11 @@
 
     education: [
       { role: "M.S. · Computer Science & Engineering", org: "National Taiwan Ocean University", date: "2022 — 2024",
-        bullets: ["Research in CV (semantic segmentation) & ML & System Integration (patent granted)"] },
+        bullets: [
+          "Thesis: <a href='https://hdl.handle.net/11296/8hdk47' target='_blank'>A Cloud-based Smart Fish-Feeding System</a> — cross-pond feeding-intensity assessment via knowledge distillation and feeding-splash segmentation (advisor: Prof. Chin-Chun Chang).",
+          "Presented at the 37th IPPR Conference on CVGIP, 2024 · patent granted."
+        ],
+        tags: ["Computer Vision", "Segmentation", "Knowledge Distillation"] },
       { role: "B.S. · Computer Science & Engineering", org: "National Taiwan Ocean University", date: "2018 — 2022" }
     ],
 
@@ -226,8 +230,6 @@
         <a class="btn out" href="${p.links.linkedin}" target="_blank">LinkedIn</a>
         ${p.links.resume ? `<a class="btn out" href="${p.links.resume}" target="_blank">Resume ↓</a>` : ''}
       </div>
-      <p class="sec-title">Education</p>
-      ${DATA.education.map(card).join('')}
       <p class="sec-title">Contact</p>
       <div class="contact-row">
         ${p.links.email ? `<a href="mailto:${p.links.email}">${p.links.email}</a>` : ''}
@@ -236,7 +238,8 @@
       </div>`;
 
     document.getElementById('experience').innerHTML =
-      `<p class="sec-title">Experience</p>` + DATA.experience.map(card).join('');
+      `<p class="sec-title">Experience</p>` + DATA.experience.map(card).join('') +
+      `<p class="sec-title">Education</p>` + DATA.education.map(card).join('');
 
     document.getElementById('projects').innerHTML =
       `<p class="sec-title">Featured Projects</p><div class="pgrid">` +
