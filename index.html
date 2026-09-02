@@ -70,6 +70,10 @@
     .card ul{list-style:none;margin-top:4px}
     .card li{font-size:15px;color:var(--dim);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.6}
     .card li::before{content:'–';position:absolute;left:0;color:var(--accent)}
+    .card li b{color:var(--accent);font-weight:600}
+    .card li a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent-line);text-underline-offset:3px;transition:.15s}
+    .card li a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+    .card li .en{font-size:13px}
     .award{font-family:var(--mono);font-size:13px;color:var(--accent);margin-top:8px}
     .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
     .tags span{font-family:var(--mono);font-size:12px;color:var(--accent);background:var(--accent-soft);
@@ -134,13 +138,23 @@
     },
 
     education: [
-      { role: "M.S. · Computer Science & Engineering", org: "National Taiwan Ocean University", date: "2022 — 2024",
+      {
+        role: "M.S. · Computer Science & Engineering", org: "National Taiwan Ocean University", date: "2022 — 2024",
         bullets: [
-          "Thesis: <a href='https://hdl.handle.net/11296/8hdk47' target='_blank'>A Cloud-based Smart Fish-Feeding System</a> — cross-pond feeding-intensity assessment via knowledge distillation and feeding-splash segmentation (advisor: Prof. Chin-Chun Chang).",
-          "Presented at the 37th IPPR Conference on CVGIP, 2024 · patent granted."
+          "<b>Research</b><br>Applied computer vision & machine learning to real aquaculture-industry problems",
+          "<b>Thesis & Conference Publication</b><br><a href='https://hdl.handle.net/11296/8hdk47' target='_blank'>雲端智慧投餌系統：使用知識蒸餾、水花偵測技術評估餵食強度的跨場域設計</a><br><span class='en'>(A Cloud-based Smart Fish Feeding System: Design for Cross-Pond Assessment of Feeding Intensity Using Knowledge Distillation and Feeding-Splash Segmentation Technology)</span><br>Presented at the 37th IPPR Conference on CVGIP, 2024<br>Advised by Prof. Chin-Chun Chang",
+          "<b>Projects</b> · Delivered two Fisheries-Agency-funded aquaculture R&D projects<br>智慧化水產養殖投料機具及系統開發<br><span class='en'>(Intelligent Aquaculture Feeding Equipment and System Design)</span><br>鱸魚精準餵食及養殖環境監測與智能生產決策系統研究與開發<br><span class='en'>(Precision Aquaculture Environmental Detection with AI Manufacturing Decision System and Intelligent Feeding Management System — seabass as a model)</span>",
+          "<b>Patent</b> · TWI892930<br>智慧投餌強度辨識系統及方法<br><span class='en'>(<a href='https://tiponet.tipo.gov.tw/twpat1/twpatc/twpatengkm?!!FRURLI892930' target='_blank'>Smart Fish Feeding Intensity Identification System and Method</a>)</span>"
         ],
-        tags: ["Computer Vision", "Segmentation", "Knowledge Distillation"] },
-      { role: "B.S. · Computer Science & Engineering", org: "National Taiwan Ocean University", date: "2018 — 2022" }
+        tags: ["Computer Vision", "Semantic Segmentation", "Knowledge Distillation", "System Integration"]
+      },
+      {
+        role: "B.S. · Computer Science & Engineering", org: "National Taiwan Ocean University", date: "2018 — 2022",
+        bullets:[
+          "Captain, CSE Badminton team",
+          "President, Yunlin–Chiayi Senior High School Alumni Association"
+        ]
+      }
     ],
 
     experience: [
