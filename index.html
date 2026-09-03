@@ -38,7 +38,7 @@
     .tab:hover{color:var(--text)}
     .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
     main{max-width:var(--max);margin:0 auto;padding:0 24px}
-    .panel{display:none;padding:40px 0 80px;animation:fade .35s ease}
+    .panel{display:none;padding:24px 0 80px;animation:fade .35s ease}
     .panel.active{display:block}
     @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
     /* hero */
@@ -60,21 +60,23 @@
     .sec-title{font-family:var(--mono);font-size:13px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase;
       display:flex;align-items:center;gap:14px;margin:38px 0 22px}
     .sec-title::after{content:'';flex:1;border-top:1px solid var(--border)}
+    .sec-title:first-child{margin-top:0}
     .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:14px;transition:.2s}
     .card:hover{border-color:var(--accent-line)}
     .card-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
-    .role{font-size:18px;font-weight:600;color:var(--text)}
-    .org{font-size:14px;color:var(--accent)}
+    .ln1{font-size:18px;font-weight:600;color:var(--text)}
+    .ln2{font-size:14px;color:var(--accent);margin-top:1px}
     .when{color:var(--mute);font-style:italic;font-size:12px}
     .date{font-family:var(--mono);font-size:13px;color:var(--mute);white-space:nowrap}
     .card ul{list-style:none;margin-top:4px}
     .card li{font-size:15px;color:var(--dim);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.6}
     .card li::before{content:'–';position:absolute;left:0;color:var(--accent)}
     .card li b{color:var(--accent);font-weight:600}
+    .card li strong{color:var(--text);font-weight:700}
     .card li a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent-line);text-underline-offset:3px;transition:.15s}
     .card li a:hover{color:var(--accent);text-decoration-color:var(--accent)}
     .card li .en{font-size:13px}
-    .award{font-family:var(--mono);font-size:13px;color:var(--accent);margin-top:8px}
+    .award{display:inline-block;font-family:var(--mono);font-size:13px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:8px;padding:5px 12px;margin-top:10px}
     .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
     .tags span{font-family:var(--mono);font-size:12px;color:var(--accent);background:var(--accent-soft);
       border:1px solid var(--accent-line);border-radius:7px;padding:3px 10px}
@@ -158,31 +160,53 @@
     ],
 
     experience: [
-      { role: "Software and ML Engineer", org: "Quanta Cloud Technology (QCT)", date: "2024.09 — Present",
+      { role: "Machine Learning Engineer", org: "Quanta Cloud Technology (QCT)", date: "Sep 2024 — Present",
         bullets: [
-          "Build agentic systems on NVIDIA NeMo Agent Toolkit's multi-agent architecture, applying AI to real software-engineering workflows. A production deployment already serves ~100 internal users.",
-          "Extend SOTA models for semantic/instance segmentation and image/video understanding. Currently designing detailed pipeline architecture on NVIDIA's Video Search and Summarization (VSS) framework.",
-          "On QCT/Quanta GPU servers, own inference performance tuning for production LLM/VLM services, standardizing on vLLM after evaluating alternative serving frameworks (NVIDIA NIM, TensorRT-LLM, Ollama, llama.cpp). Profile and optimize TTFT, throughput, and end-to-end latency under real concurrent-user workloads."
+          "<b>Agentic Applications</b><br>Build agentic systems on NeMo Agent Toolkit for real software-engineering workflows.<br>Build agents for research, software testing & model fine-tuning.<br>Support flexible LLM/VLM backends — self-hosted on-prem GPU or third-party hosted.<br><strong>One production deployment already serves ~100 internal users.</strong>",
+          "<b>Computer Vision & Machine Learning</b><br>Extend SOTA models for semantic/instance segmentation & image/video understanding.<br>Design the pipeline on NVIDIA VSS (Video Search & Summarization).<br>Apply knowledge distillation to lightweight models for real-time inference.",
+          "<b>Deployment & Performance</b><br>Own inference tuning for production LLM/VLM services on QCT GPU servers; standardize on vLLM after evaluating NVIDIA NIM, TensorRT-LLM, Ollama & llama.cpp.<br>Profile & optimize TTFT, throughput & E2E latency under real concurrent-user workloads.<br>Collaborate with external partners to onboard & enhance their services, resolving deployment bottlenecks."
         ],
-        tags: ["Agentic AI", "vLLM", "TensorRT-LLM", "PyTorch"] },
+        tags: ["Agentic Systems", "On-Prem Deployment", "Video Understanding"] },
 
-      { role: "Research Intern · 5G + AI", when: "during M.S.", org: "Quanta Cloud Technology (QCT)", date: "2023.06 — 11",
+      { role: "Research Intern · 5G + AI", when: "during M.S.", org: "Quanta Cloud Technology (QCT)", date: "Jun — Nov 2023",
         bullets: [
-          "Built NWDAF on free5GC to collect UE & network metrics",
-          "LSTM / Transformer traffic prediction for dynamic network slicing"
+          "Deployed free5GC on a QCT server to simulate real 5G-core operation.",
+          "Built NWDAF on free5GC to collect UE and network metrics.",
+          "Used UERANSIM to simulate multiple UEs' behavior under different network slices.",
+          "Collected UE behavior data and applied deep-learning models to predict upcoming events.",
+          "Developed a pipeline to handle the time-series prediction problem."
         ],
-        award: "🏅 Merit Award · 資策會 (III) 5G Competition",
-        tags: ["5G Core", "free5GC", "LSTM", "Transformer"] },
+        award: "🏅 Merit Award · Institute for Information Industry(資策會) 5G Jump Competition",
+        tags: ["5G Core", "free5GC", "NWDAF", "UERANSIM", "Deep Learning", "Network Slice"] },
 
-      { role: "CV Project Lead · Fisheries Agency", when: "during M.S.", org: "Fisheries Agency × NTOU", date: "2022 — 2024",
+      { role: "Graduate Research Assistant", when: "during M.S.", org: "National Taiwan Ocean University · Intelligent System Lab", date: "2022 — 2024",
         bullets: [
-          "SAM-based aquaculture feeding monitoring deployed on land-based farms",
-          "Real-time fish-satiation estimation · patent granted · M.S. thesis"
+          "<b>Research</b><br>Field-interviewed fish farmers to capture real user needs, then designed, built & deployed the full system.<br>Collaborated across NTOU's Electrical Engineering & Aquaculture departments and coordinated vendors for on-site infrastructure.<br><strong>Now running on 7 land-based fish farms in southern Taiwan.</strong>",
+          "<b>Projects</b><br>智慧化水產養殖投料機具及系統開發<br><span class='en'>(Intelligent Aquaculture Feeding Equipment & System Design)</span><br>鱸魚精準餵食及養殖環境監測與智能生產決策系統研究與開發<br><span class='en'>(Precision Aquaculture Environmental Detection with AI Manufacturing Decision System & Intelligent Feeding Management System — seabass as a model)</span><br>智能化箱網養殖模式研究<br><span class='en'>(A Study of Artificial Intelligence on Smart Cage Culture)</span>",
+          "Exhibited at the 2023 Taiwan Innotech Expo (TIE).",
+          "Patent granted from this research — TWI892930."
         ],
-        tags: ["SAM", "Segmentation", "PyTorch"] },
+        tags: ["Computer Vision", "System Design", "On-Site Interview", "Cross-team Collaboration"] },
 
-      { role: "Teaching Assistant", org: "NTOU · CSE", date: "2019 — 2024",
-        bullets: ["Machine Learning, Machine Vision, Programming & Lab (C/C++), General Physics"] }
+      { role: "Teaching Assistant", when: "during B.S. & M.S.", org: "National Taiwan Ocean University · CSE", date: "2019 — 2024",
+        bullets: [
+          "<b>Teaching</b><br>Designed course materials, exams & grading schemes, and ran after-class problem-solving tutoring.",
+          "<b>Courses</b><br>Introduction to Programming & Lab, C/C++ (2022 Fall, 2023 Fall)<br>Machine Learning (2023 Spring)<br>Machine Vision (2024 Spring)<br>General Physics (2019 Fall, 2022 Spring, 2022 Fall, 2024 Spring)<br>Seminar (2022 Fall, 2023 Spring)<br>Introduction to Information Technology (2023 Fall)"
+        ] },
+
+      { role: "Physics Lecturer", org: "National Yunlin University of Science and Technology", date: "Summers 2019 — 2022",
+        bullets: [
+          "Taught general physics to incoming freshmen.",
+          "Shared my own university experience to help them settle in.",
+          "Prepared course materials & exam questions, with live Q&A sessions."
+        ] },
+
+      { role: "Administrative Assistant", when: "during B.S. & M.S.", org: "National Taiwan Ocean University · Library", date: "2019 — 2024",
+        bullets: [
+          "Circulation services, book storage & reader records",
+          "Improved the library's automated access-control system.<br>The spark behind my Unmanned Library Access Control System during COVID-19.",
+          "My first job!"
+        ] }
     ],
 
     projects: [
@@ -198,12 +222,14 @@
         tags:  ["5G Core", "LSTM", "Transformer"] }
     ]
   };
-  const card = x => `
+  const card = (x, orgFirst) => {
+    const role = `${x.role}${x.when ? ` <span class="when">${x.when}</span>` : ''}`;
+    return `
     <div class="card">
       <div class="card-head">
         <div>
-          <div class="role">${x.role}${x.when ? ` <span class="when">${x.when}</span>` : ''}</div>
-          <div class="org">${x.org}</div>
+          <div class="ln1">${orgFirst ? x.org : role}</div>
+          <div class="ln2">${orgFirst ? role : x.org}</div>
         </div>
         <span class="date">${x.date}</span>
       </div>
@@ -211,6 +237,7 @@
       ${x.award ? `<div class="award">${x.award}</div>` : ''}
       ${x.tags?.length ? `<div class="tags">${x.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
     </div>`;
+  };
 
   const project = p => `
     <div class="pcard">
@@ -252,8 +279,8 @@
       </div>`;
 
     document.getElementById('experience').innerHTML =
-      `<p class="sec-title">Experience</p>` + DATA.experience.map(card).join('') +
-      `<p class="sec-title">Education</p>` + DATA.education.map(card).join('');
+      DATA.experience.map(x => card(x, true)).join('') +
+      `<p class="sec-title">Education</p>` + DATA.education.map(x => card(x)).join('');
 
     document.getElementById('projects').innerHTML =
       `<p class="sec-title">Featured Projects</p><div class="pgrid">` +
