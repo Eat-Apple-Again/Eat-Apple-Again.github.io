@@ -87,16 +87,29 @@
       background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;padding:0;
       transition:border-color .2s,transform .2s}
     .pcard:hover{border-color:var(--accent-line);transform:translateY(-3px)}
-    .pcover{aspect-ratio:16/10;background:var(--accent-soft);border-bottom:1px solid var(--border);
+    .pcover{position:relative;overflow:hidden;aspect-ratio:16/10;background:var(--accent-soft);border-bottom:1px solid var(--border);
       display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:var(--mute)}
     .pcover img{width:100%;height:100%;object-fit:cover;display:block}
+    /* carousel */
+    .carousel{position:absolute;inset:0}
+    .cslide{position:absolute;inset:0;opacity:0;transition:opacity .6s}
+    .cslide.on{opacity:1}
+    .cslide img{width:100%;height:100%;object-fit:cover;display:block}
+    .cdots{position:absolute;bottom:8px;left:0;right:0;display:flex;gap:6px;justify-content:center;z-index:2}
+    .cdots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);transition:.2s}
+    .cdots i.on{width:16px;border-radius:3px;background:#fff}
+    .cnav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:32px;height:32px;border-radius:50%;
+      border:0;background:rgba(0,0,0,.4);color:#fff;font-size:18px;line-height:1;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;transition:.2s}
+    .cnav:hover{background:rgba(0,0,0,.65)}
+    .cnav.prev{left:10px}
+    .cnav.next{right:10px}
     .pbody{padding:20px;display:flex;flex-direction:column;flex:1}
     .pgroup-tag{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
       color:var(--accent);margin-bottom:10px}
     .ptitle{font-size:17px;font-weight:600;color:var(--text)}
     .ptitle .zh{font-weight:500;font-size:14px;color:var(--dim)}
-    .psum{font-size:14px;color:var(--dim);line-height:1.65;margin-top:8px;
-      display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .psum{font-size:14px;color:var(--dim);line-height:1.65;margin-top:8px}
     .pbody .tags{margin-top:14px}
     .pmore{margin-top:auto;padding-top:16px;font-family:var(--mono);font-size:13px;color:var(--accent)}
     /* modal */
@@ -117,7 +130,7 @@
       font-family:var(--mono);font-size:12px;color:var(--mute)}
     .modal-body{padding:24px}
     .modal-title{font-size:20px;font-weight:600;color:var(--text);margin-bottom:16px}
-    .modal-title .zh{font-weight:500;font-size:15px;color:var(--dim)}
+    .modal-title .zh{display:block;font-weight:500;font-size:15px;color:var(--dim);margin-top:5px}
     .pblock{margin-bottom:14px}
     .pblock:last-of-type{margin-bottom:0}
     .pblock b{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.06em;
@@ -213,7 +226,7 @@
           "Collected UE behavior data and applied deep-learning models to predict upcoming events.",
           "Developed a pipeline to handle the time-series prediction problem."
         ],
-        award: "🏅 Merit Award · Institute for Information Industry(資策會) 5G Jump Competition",
+        award: "🏅 Honorable Mention · Institute for Information Industry (資策會) 5G Jump Competition",
         tags: ["5G Core", "free5GC", "NWDAF", "UERANSIM", "Deep Learning", "Network Slice"] },
 
       { role: "Graduate Research Assistant", when: "during M.S.", org: "National Taiwan Ocean University · Intelligent System Lab", date: "2022 — 2024",
@@ -247,62 +260,66 @@
     ],
 
     projects: [
-      { group: "Fishery Agency", cover: "", title: "Precision Feeding for Seabass", zh: "鱸魚精準餵食",
-        summary: "A computer-vision system that reads the water splashes fish make while feeding, so seabass are fed by satiation instead of by guess.",
-        tags: ["SAM", "Semantic Segmentation", "PyTorch", "Real-Time"],
+      { group: "Fishery Agency", cover: "data/project/ar2_splash_semantic.png",
+        //images: ["data/project/ar2_splash_semantic.png"],
+        title: "Precision Aquaculture Feeding for Seabass", zh: "鱸魚精準餵食系統",
+        summary: "Designed a computer-vision-driven smart feeding system that helps fish farmers monitor how the fish feed in real time. It saves time, boosts efficiency, and cuts feed waste.",
+        tags: ["Splash Semantic Segmentation", "Knowledge Distillation"],
         video: "",
         link: { label: "GitHub ↗", url: "https://github.com/Eat-Apple-Again/RipplesDetection" },
         blocks: [
-          { h: "Problem", body: "Farmers feed seabass by eye. Overfeeding wastes the single largest cost on a farm and fouls the water; underfeeding stunts growth. There was no objective read on when the fish were actually full." },
-          { h: "Approach", body: "I built a computer-vision pipeline around <strong>SAM-based semantic segmentation</strong> that isolates the water splashes fish make while surface-feeding. Splash area and intensity become a live satiation signal that drives the feeder — keep feeding, slow down, or stop." },
-          { h: "Outcome", body: "Turned feeding into a real-time, data-driven decision instead of a guess. The work became my <strong>M.S. thesis</strong> and a granted patent (<strong>TWI892930</strong>)." }
+          { h: "Problem", body: "Traditional fish farmers have to be at the pond in person, watching how the fish feed.<br> For seabass that means dawn and dusk sessions of four hours or more. <br>Overfeeding wastes feed, degrades the pond, and draws in wild birds that may carry disease; underfeeding slows growth and misses the market window." },
+          { h: "Approach", body: "This project ran on-site at <strong>seven land-based farms in southern Taiwan</strong>.<br>As the splash pattern and texture differ from pond to pond, I designed a fine-tuning framework that combines <strong>knowledge distillation</strong> and <strong>position embedding</strong> techniques. Each pond then needs only about <strong>300 splash images</strong> to fine-tune a semantic segmentation model that identifies the splashes of fish scrambling for feed. A <strong>LINE Bot</strong> notification service lets fishers check the pond from anywhere." },
+          { h: "Outcome", body: "Estimated to cut feed use by <strong>5–20%</strong> and save around <strong>146 working hours a year</strong>." }
         ] },
 
-      { group: "Fishery Agency", cover: "", title: "Intelligent Aquaculture Feeding System", zh: "智慧化水產養殖投料機具及系統",
-        summary: "An end-to-end smart-farming system — cloud-deployed monitoring that tracks feed usage and estimates the feed-conversion ratio.",
+      { group: "Fishery Agency", cover: "data/project/splash_line-chart.png", coverFit: "contain",
+        images: ["data/project/splash_line-chart.png", "data/project/heatmap_ar2DB.png"],
+        title: "Intelligent Aquaculture Management System Design", zh: "智慧化水產養殖投料機具及系統開發應用",
+        summary: "A smart aquaculture management system preserves the experience and data that were hard to accumulate before. It helps the industry pass knowledge down & make data-driven decisions.",
         tags: ["System Design", "Cloud Deployment", "IoT", "Data Pipeline"],
         video: "",
         blocks: [
-          { h: "Problem", body: "Land-based farms ran without integrated monitoring. Feed is the biggest running cost, yet nobody could see how much was actually used or how efficiently it converted into fish weight." },
-          { h: "Approach", body: "I planned and built the system end to end — a <strong>cloud-deployed</strong> platform that integrates the feeding equipment, logs feed usage, and estimates the <strong>feed-conversion ratio (換肉率)</strong>, so operators can tune feeding against real numbers." },
-          { h: "Outcome", body: "Fisheries-Agency-funded and now running on <strong>7 land-based farms in southern Taiwan</strong>. Exhibited at the <strong>2023 Taiwan Innotech Expo (TIE)</strong>." }
+          { h: "Problem", body: "Traditional aquaculture struggles to pass knowledge down. There's just a little scientific data on record, and technique is mostly handed down by word of mouth (how green the water should look, how the feed should be given). That makes it hard for younger fishers to learn from the veterans before them." },
+          { h: "Approach", body: "Our team deployed a <strong>cloud feeding-management system</strong> that records everything across an entire grow-out season, including splash-distribution maps, daily feeding logs, and the <strong>feed-conversion ratio (換肉率)</strong>. It also adapts its parameters to the fish's appetite on the day and to the farmer's own culture plan, leaving room for flexible adjustment." },
+          { h: "Outcome", body: "By keeping data as a scientific record, hard-won farming experience can be passed on far more precisely. For instance, splash-distribution data, shown as a <strong>heatmap</strong>, lets fishers see when the fish tend to feed and whether they have been eating normally. This project help the industry pass knowledge down and make data-driven decisions." }
         ] },
 
       { group: "Patent", cover: "data/project/patent_twi892930.png", coverPos: "center 33%",
-        title: "Feeding-Intensity Recognition", zh: "智慧投餵強度辨識系統及方法",
-        summary: "A granted invention patent — the water-splash method that reads how intensely fish are feeding.",
-        tags: ["TIPO", "Computer Vision", "Aquaculture"],
+        title: "Smart Fish Feeding Intensity Identification System and Method", zh: "智慧投餌強度辨識系統及方法",
+        summary: "A method captures the splashes fish make while scrambling for feed and reads their size to infer how long and how much the fish eat. Over time, those changes reveal the fish's appetite trend.",
+        tags: ["Smart Aquaculture", "Fish Feeding", "Image Analysis"],
         blocks: [
-          { h: "Invention", body: "Reads the water-splash patterns fish make while feeding to gauge how intensely they are feeding, and drives the feeder accordingly — keep feeding, slow down, or stop." },
-          { h: "Status", body: "Granted invention patent <strong>TWI892930</strong>, held by National Taiwan Ocean University with me as a <strong>co-inventor</strong>. Effective 2025–2044, certified by the Taiwan Intellectual Property Office (TIPO)." }
+          { h: "Invention", body: "A smart feeding intensity recognition system and method. An image-capture device obtains images of the water splashes fish make while scrambling for feed at the farm, and analyses the size of those splashes to determine how long and how much the fish are feeding. Over a period of time, the changes in feeding duration and splash size reveal the fish's appetite trend." },
+          { h: "Detail", body: "Granted invention patent <strong>TWI892930</strong>, awarded in <strong>August 2025</strong> by the Taiwan Intellectual Property Office (TIPO). It came from a National Taiwan Ocean University team across the <strong>Department of Computer Science and Engineering (資工系), Department of Aquaculture (養殖系), and Department of Electrical Engineering (電機系)</strong>, with me as a co-inventor." }
         ] },
 
       { group: "Internship", cover: "data/project/5G_Jump_2023.png", title: "5G Core & Deep Learning", zh: "",
-        summary: "A traffic-prediction model on a self-hosted 5G core that drives dynamic network-slice allocation.",
-        tags: ["5G Core", "free5GC", "NWDAF", "Deep Learning"],
+        summary: "5G brings many differentiated-SLA scenarios that make the network more capable but also more complex. The team added intelligence to the core with 3GPP's NWDAF, predicting user mobility to drive smarter network-slice control.",
+        tags: ["5G Core", "NWDAF", "Network Slice", "K8s", "Deep Learning"],
         blocks: [
-          { h: "Problem", body: "A 5G core has to split limited network-slice resources across users whose demand keeps shifting. Static allocation either wastes capacity or starves users and hurts QoS." },
-          { h: "Approach", body: "I stood up a 5G core on <strong>free5GC</strong>, built an <strong>NWDAF</strong> to collect core metrics, simulated UE behaviour with <strong>UERANSIM</strong>, and trained a time-series deep-learning model to forecast traffic for dynamic slice allocation." },
-          { h: "Outcome", body: "Won a <strong>Merit Award</strong> at the Institute for Information Industry (資策會) 5G Jump Competition." }
+          { h: "Problem", body: "The 5G era brings many scenarios with differentiated SLA demands. They hand operators more capability but also make the network architecture far more complex, so network services need to grow smarter to hold quality of service across such varied use cases." },
+          { h: "Approach", body: "The team implemented <strong>NWDAF</strong> (3GPP R15), building both of its core functions, <strong>MTLF</strong> (model training) and <strong>AnLF</strong> (analytics), and deployed the <strong>free5GC</strong> core on <strong>Kubernetes</strong>. A demo scenario simulating office activity, with UEs generated by <strong>UERANSIM</strong>, predicts each UE's mobility to guide network-slice control and resource scheduling. Through NWDAF, the team collects registered UE contexts from the AMF and takes their TAC as the mobility feature to build the training dataset; at inference, the model reads the last several time units to predict a UE's next location." },
+          { h: "Outcome", body: "Delivered a working <strong>proof of concept</strong>: UE-mobility prediction feeding into network-slice scheduling. The work won an <strong>Honorable Mention</strong> at the Institute for Information Industry (資策會) 5G Jump Competition, 2023." }
         ] },
 
-      { group: "Campus System", cover: "", title: "Unmanned Library Access Control", zh: "無人圖書館門禁系統",
-        summary: "A contactless entry system built during COVID-19 — temperature checks, access control, live occupancy and anomaly alerts.",
+      { group: "Senior Project", cover: "data/project/admin_page.png", title: "Unmanned Access Control Station", zh: "無人門禁系統",
+        summary: "During COVID-19, I built a contactless entrance system on a Raspberry Pi with my roommate, using a library entrance drawn from my own experience there to frame the problem and design the solution. It checks temperature, controls access, and tracks occupancy with no staff at the entrance.",
         tags: ["Access Control", "IoT", "Database", "Automation"],
         video: "",
         blocks: [
-          { h: "Problem", body: "During COVID-19 the library had to limit contact and keep track of who was inside, but staffing the entrance around the clock wasn't realistic." },
-          { h: "Approach", body: "I built an unmanned access-control system that <strong>measures temperature automatically</strong>, gates entry, counts live occupancy, raises anomaly alerts, and logs everything to a database." },
-          { h: "Outcome", body: "Kept the library open and safe with no one stationed at the door. It grew out of my library job improving the access-control system." }
+          { h: "Problem", body: "During COVID-19, public places had to enforce real-name entry and temperature checks at the entrance. The library where I worked already logged daily entries and swept for anyone left inside at closing; the pandemic added the job of taking every reader's temperature on the way in. That meant more staff on the payroll and more time spent exposed at the entrance." },
+          { h: "Approach", body: "Using a <strong>Raspberry Pi 4</strong>, an <strong>RFID reader</strong> and a temperature sensor, I built a management system that keeps the original entry/exit logging and adds automatic temperature measurement, an anomaly-entry alert, and live in-library occupancy tracking. It spans the full stack: a backend database, a front-end admin console, and the on-site sensor setup." },
+          { h: "Outcome", body: "Total hardware cost came in under <strong>NT$3,000</strong>, and by design it keeps front-line staff away from the entrance, cutting their exposure risk during the pandemic." }
         ] },
 
       { group: "First Project", cover: "data/project/where_to_transfer_main.png", title: "Where to Transfer", zh: "",
-        summary: "My first project — a route planner that helps students map affordable transfers from Keelung to Taipei.",
-        tags: ["Web App", "Route Planning"],
+        summary: "This was my first coding project, a web app for the Keelung-to-Taipei commute. It compares each train-to-MRT transfer by travel time and fare, so riders can pick the fastest or the cheapest.",
+        tags: ["Web App", "jQuery", "Route Planning"],
         blocks: [
-          { h: "Problem", body: "Students commuting between Keelung and Taipei juggle a maze of bus and train options on a tight transit budget — planning an affordable route by hand is tedious." },
-          { h: "Approach", body: "I built a web app that lays out the transfer options from Keelung to Taipei, so students can pick a route that fits their time and their fare." },
-          { h: "Outcome", body: "My very first project — the one that got me building things people actually use." }
+          { h: "Problem", body: "As an Ocean University student, getting from Keelung to Taipei back in December 2019 meant either the train or a coach, and I preferred the train. (Since then, more direct coaches have made the trip easier.) The train stops at several Taipei stations where you can transfer to the MRT, and each transfer point gives a different route, time, and fare to where you are actually headed." },
+          { h: "Approach", body: "We built it with HTML, CSS, and JavaScript (<strong>jQuery</strong>). Pick a destination station and the app lays out each train-to-MRT transfer option, with the travel time and fare side by side, so a rider can compare at a glance and choose." },
+          { h: "Outcome", body: "Passengers get a quick way to compare transfer options and pick the fastest or the cheapest way to their destination." }
         ] }
     ]
   };
@@ -323,16 +340,37 @@
     </div>`;
   };
 
-  const coverImg = p => `<img src="${p.cover}" alt="${p.title}"${p.coverPos ? ` style="object-position:${p.coverPos}"` : ''}>`;
+  const coverImg = p => {
+    const st = [p.coverFit && `object-fit:${p.coverFit}`, p.coverPos && `object-position:${p.coverPos}`].filter(Boolean).join(';');
+    return `<img src="${p.cover}" alt="${p.title}"${st ? ` style="${st}"` : ''}>`;
+  };
   const cover = p => p.cover ? coverImg(p) : 'cover image';
+
+  // image carousel (auto-rotating on cards, arrow/dot navigation in the modal)
+  const carousel = (p, interactive) => {
+    const fit = p.coverFit ? ` style="object-fit:${p.coverFit}"` : '';
+    return `<div class="carousel">
+      ${p.images.map((src, k) => `<div class="cslide${k === 0 ? ' on' : ''}"><img src="${src}" alt="${p.title} ${k + 1}"${fit}></div>`).join('')}
+      ${interactive ? `<button class="cnav prev" type="button" aria-label="Previous">‹</button><button class="cnav next" type="button" aria-label="Next">›</button>` : ''}
+      <div class="cdots">${p.images.map((_, k) => `<i class="${k === 0 ? 'on' : ''}"></i>`).join('')}</div>
+    </div>`;
+  };
+  const media = (p, interactive) => p.images?.length ? carousel(p, interactive) : cover(p);
+
+  // carousel state helpers
+  const curSlide = car => [...car.querySelectorAll('.cslide')].findIndex(s => s.classList.contains('on'));
+  function setSlide(car, idx){
+    car.querySelectorAll('.cslide').forEach((s, k) => s.classList.toggle('on', k === idx));
+    car.querySelectorAll('.cdots i').forEach((d, k) => d.classList.toggle('on', k === idx));
+  }
 
   const project = (p, i) => `
     <button class="pcard" type="button" data-i="${i}">
-      <div class="pcover">${cover(p)}</div>
+      <div class="pcover">${media(p, false)}</div>
       <div class="pbody">
         ${p.group ? `<div class="pgroup-tag">${p.group}</div>` : ''}
         <div class="ptitle">${p.title}</div>
-        <div class="psum">${p.summary}</div>
+        <div class="psum">${p.summary || ''}</div>
         ${p.tags?.length ? `<div class="tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
         <div class="pmore">View details →</div>
       </div>
@@ -345,7 +383,7 @@
       <button class="modal-close" aria-label="Close">✕</button>
       <div class="modal-media">${p.video
         ? `<iframe src="https://www.youtube.com/embed/${p.video}" title="${p.title} demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-        : (p.cover ? coverImg(p) : `<div class="ph">${'video' in p ? 'demo video coming soon' : 'cover image'}</div>`)}</div>
+        : ((p.images?.length || p.cover) ? media(p, true) : `<div class="ph">${'video' in p ? 'demo video coming soon' : 'cover image'}</div>`)}</div>
       <div class="modal-body">
         ${p.group ? `<div class="pgroup-tag">${p.group}</div>` : ''}
         <div class="modal-title">${p.title}${p.zh ? ` <span class="zh">${p.zh}</span>` : ''}</div>
@@ -392,12 +430,27 @@
   }
   render();
 
+  // auto-rotate every card carousel
+  document.querySelectorAll('#projects .carousel').forEach(car => {
+    const n = car.querySelectorAll('.cslide').length;
+    if(n > 1) setInterval(() => setSlide(car, (curSlide(car) + 1) % n), 2800);
+  });
+
   // projects: click a card to open its detail in a modal
   const pmodal = document.getElementById('pmodal');
   function openProject(i){
     pmodal.innerHTML = projectModal(DATA.projects[i]);
     pmodal.hidden = false;
     document.body.style.overflow = 'hidden';
+    const car = pmodal.querySelector('.carousel');
+    if(car){
+      const n = car.querySelectorAll('.cslide').length;
+      car.addEventListener('click', e => {
+        if(e.target.closest('.cnav.next')) setSlide(car, (curSlide(car) + 1) % n);
+        else if(e.target.closest('.cnav.prev')) setSlide(car, (curSlide(car) - 1 + n) % n);
+        else { const di = [...car.querySelectorAll('.cdots i')].indexOf(e.target); if(di >= 0) setSlide(car, di); }
+      });
+    }
   }
   function closeProject(){
     pmodal.hidden = true;
