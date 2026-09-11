@@ -53,6 +53,12 @@
     .loc{font-family:var(--mono);font-size:13px;color:var(--dim);margin-top:8px}
     .bio{font-size:17px;color:var(--dim);margin:18px auto 0;max-width:560px;line-height:1.8;text-align:left}
     .bio b{color:var(--text);font-weight:600}
+    .avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 20px;
+      border:1px solid var(--border)}
+    .focus{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:2px}
+    .focus-item .ft{font-size:15px;font-weight:600;color:var(--text)}
+    .focus-item .fn{font-size:13px;color:var(--dim);line-height:1.6;margin-top:5px}
+    @media(max-width:600px){.focus{grid-template-columns:1fr;gap:16px}}
     .links{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;justify-content:center}
     .btn{font-family:var(--mono);font-size:14px;font-weight:500;padding:10px 20px;border-radius:10px;
       background:var(--accent);color:var(--bg);transition:.2s}
@@ -140,9 +146,7 @@
     .plinks{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px}
     .plink{font-family:var(--mono);font-size:13px;color:var(--accent)}
     @media(max-width:820px){.pgrid{grid-template-columns:1fr}}
-    .contact-row{display:flex;gap:24px;flex-wrap:wrap;margin-top:6px}
-    .contact-row a{font-family:var(--mono);font-size:14px;color:var(--dim)}
-    .contact-row a:hover{color:var(--accent)}
+    .btn.soon{opacity:.45;pointer-events:none}
     footer{border-top:1px solid var(--border);text-align:center;padding:24px;font-family:var(--mono);
       font-size:12px;color:var(--mute)}
     @media(max-width:600px){
@@ -181,12 +185,18 @@
       zhName:     "蕭皓天",
       title:      "Machine Learning Engineer",
       location:   "Taipei, Taiwan",
-      bio:  "This site is still a draft.",
+      photo:  "",
+      bio:  "",
       links: {
         github:   "https://github.com/Eat-Apple-Again",
         linkedin: "https://www.linkedin.com/in/eat-apple-again/",
         email:    ""
-      }
+      },
+      focus: [
+        { title: "Agentic AI Workflow", note: "Building agentic systems for software-engineering workflows." },
+        { title: "Computer Vision and ML", note: "Segmentation, video understanding, and model fine-tuning." },
+        { title: "What's Next?", note: "" }
+      ]
     },
 
     education: [
@@ -402,23 +412,21 @@
 
     document.getElementById('about').innerHTML = `
       <div class="hero">
+        ${p.photo ? `<img class="avatar" src="${p.photo}" alt="${p.formalName}">` : ''}
         <p class="greet">Hi, I'm</p>
         <div class="namecloud"><canvas id="nameCanvas"></canvas></div>
         <p class="aka"><b>${p.formalName}</b> · ${p.zhName}</p>
         <p class="role-title">${p.title}</p>
         ${p.location ? `<p class="loc">${p.location}</p>` : ''}
       </div>
-      <p class="bio">${p.bio}</p>
+      ${p.bio ? `<p class="bio">${p.bio}</p>` : ''}
+      ${p.focus?.length ? `<p class="sec-title">What I Work On</p>
+      <div class="focus">${p.focus.map(f => `<div class="focus-item"><div class="ft">${f.title}</div>${f.note ? `<div class="fn">${f.note}</div>` : ''}</div>`).join('')}</div>` : ''}
       <div class="links">
-        <a class="btn" href="${p.links.github}" target="_blank">GitHub</a>
+        <a class="btn out" href="${p.links.github}" target="_blank">GitHub</a>
         <a class="btn out" href="${p.links.linkedin}" target="_blank">LinkedIn</a>
+        ${p.links.email ? `<a class="btn out" href="mailto:${p.links.email}">Email</a>` : `<span class="btn out soon">Email</span>`}
         ${p.links.resume ? `<a class="btn out" href="${p.links.resume}" target="_blank">Resume ↓</a>` : ''}
-      </div>
-      <p class="sec-title">Contact</p>
-      <div class="contact-row">
-        ${p.links.email ? `<a href="mailto:${p.links.email}">${p.links.email}</a>` : ''}
-        <a href="${p.links.github}" target="_blank">GitHub</a>
-        <a href="${p.links.linkedin}" target="_blank">LinkedIn</a>
       </div>`;
 
     document.getElementById('experience').innerHTML =
