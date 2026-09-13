@@ -71,19 +71,49 @@
     .sec-title:first-child{margin-top:0}
     .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:14px;transition:.2s}
     .card:hover{border-color:var(--accent-line)}
+    /* experience timeline */
+    .tl{position:relative;padding-left:34px}
+    .tl::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;
+      background:linear-gradient(var(--border),var(--border) 88%,transparent)}
+    .tl-item{position:relative;margin-bottom:14px}
+    .tl-seg{position:absolute;left:-28px;top:-2px;bottom:-16px;width:2px;background:var(--accent);z-index:0}
+    .tl-item:last-child .tl-seg{bottom:6px}
+    .tl-dot{position:absolute;left:-33px;top:27px;width:12px;height:12px;border-radius:50%;
+      background:var(--accent);box-shadow:0 0 0 4px var(--bg),0 0 0 7px var(--accent-soft);z-index:1}
+    .tl-item.ghost .tl-dot{top:15px;width:9px;height:9px;left:-31px;
+      background:var(--bg);border:2px solid var(--mute);box-shadow:0 0 0 4px var(--bg)}
+    .tl-item.edu .tl-dot{border-radius:2px;transform:rotate(45deg);background:var(--surface);
+      border:2px solid var(--accent-line);box-shadow:0 0 0 4px var(--bg)}
+    .tl-lbl{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.16em;
+      text-transform:uppercase;margin:0 0 16px;position:relative}
+    .tl-lbl.edu{margin-top:30px}
+    .tl-mini{width:100%;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;cursor:pointer;
+      background:none;border:none;text-align:left;padding:9px 2px;font-family:inherit;
+      border-bottom:1px solid var(--border);transition:.2s}
+    .tl-mini:hover{padding-left:6px}
+    .tl-mini .m-role{font-size:15px;font-weight:600;color:var(--dim);transition:.2s}
+    .tl-mini:hover .m-role{color:var(--text)}
+    .tl-mini .m-org{font-size:13px;color:var(--mute)}
+    .tl-mini .m-date{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--mute);white-space:nowrap}
+    .tl-chev{font-family:var(--mono);font-size:13px;color:var(--mute);transition:transform .25s}
+    .tl-item.open .tl-chev{transform:rotate(180deg);color:var(--accent)}
+    .tl-item.open .tl-mini{border-bottom-color:transparent}
+    .tl-detail{overflow:hidden;padding:0 2px;max-height:0;transition:max-height .35s ease}
+    .tl-item.open .tl-detail{max-height:1400px;padding-bottom:2px}
+    .tl-detail .card{margin:6px 0 0}
     .card-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
     .ln1{font-size:18px;font-weight:600;color:var(--text)}
     .ln2{font-size:14px;color:var(--accent);margin-top:1px}
     .when{color:var(--mute);font-style:italic;font-size:12px}
     .date{font-family:var(--mono);font-size:13px;color:var(--mute);white-space:nowrap}
-    .card ul{list-style:none;margin-top:4px}
-    .card li{font-size:15px;color:var(--dim);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.6}
-    .card li::before{content:'–';position:absolute;left:0;color:var(--accent)}
-    .card li b{color:var(--accent);font-weight:600}
-    .card li strong{color:var(--text);font-weight:700}
-    .card li a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent-line);text-underline-offset:3px;transition:.15s}
-    .card li a:hover{color:var(--accent);text-decoration-color:var(--accent)}
-    .card li .en{font-size:13px}
+    .card ul,.tl-detail ul{list-style:none;margin-top:4px}
+    .card li,.tl-detail li{font-size:15px;color:var(--dim);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.6}
+    .card li::before,.tl-detail li::before{content:'–';position:absolute;left:0;color:var(--accent)}
+    .card li b,.tl-detail li b{color:var(--accent);font-weight:600}
+    .card li strong,.tl-detail li strong{color:var(--text);font-weight:700}
+    .card li a,.tl-detail li a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent-line);text-underline-offset:3px;transition:.15s}
+    .card li a:hover,.tl-detail li a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+    .card li .en,.tl-detail li .en{font-size:13px}
     .award{display:inline-block;font-family:var(--mono);font-size:13px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:8px;padding:5px 12px;margin-top:10px}
     .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
     .tags span{font-family:var(--mono);font-size:12px;color:var(--accent);background:var(--accent-soft);
@@ -265,7 +295,7 @@
         bullets: [
           "Circulation services, book storage & reader records",
           "Improved the library's automated access-control system.<br>The spark behind my Unmanned Library Access Control System during COVID-19.",
-          "My first job!"
+          "My first part-time job!"
         ] }
     ],
 
@@ -333,17 +363,17 @@
         ] }
     ]
   };
-  const card = (x, orgFirst) => {
+  const card = (x, orgFirst, noHead) => {
     const role = `${x.role}${x.when ? ` <span class="when">${x.when}</span>` : ''}`;
     return `
     <div class="card">
-      <div class="card-head">
+      ${noHead ? '' : `<div class="card-head">
         <div>
           <div class="ln1">${orgFirst ? x.org : role}</div>
           <div class="ln2">${orgFirst ? role : x.org}</div>
         </div>
         <span class="date">${x.date}</span>
-      </div>
+      </div>`}
       ${x.bullets?.length ? `<ul>${x.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}
       ${x.award ? `<div class="award">${x.award}</div>` : ''}
       ${x.tags?.length ? `<div class="tags">${x.tags.map(t => `<span>${t}</span>`).join('')}</div>` : ''}
@@ -429,14 +459,43 @@
         ${p.links.resume ? `<a class="btn out" href="${p.links.resume}" target="_blank">Resume ↓</a>` : ''}
       </div>`;
 
+    const exp = DATA.experience;
+    // depth cue: oldest → newest maps to lightest → deepest along the spine
+    const N = exp.length + DATA.education.length;
+    const depth = i => (1 - (i / (N - 1)) * 0.74).toFixed(3);
+    const seg = d => `<span class="tl-seg" style="opacity:${d}"></span>`;
+    // primary role: full card, always open
+    const tlCard = (x, cls, d) => `<div class="tl-item ${cls}">${seg(d)}<span class="tl-dot"></span>${card(x, true)}</div>`;
+    // secondary role: compact node; expands into the same full card, headless to avoid repeating the row
+    const tlMini = (x, d) => {
+      const role = `${x.role}${x.when ? ` <span class="when">${x.when}</span>` : ''}`;
+      return `<div class="tl-item ghost">${seg(d)}<span class="tl-dot"></span>
+        <button class="tl-mini" type="button" aria-expanded="false">
+          <span class="m-role">${role}</span><span class="m-org">${x.org}</span>
+          <span class="m-date">${x.date}</span><span class="tl-chev">⌄</span>
+        </button>
+        <div class="tl-detail">${card(x, true, true)}</div></div>`;
+    };
     document.getElementById('experience').innerHTML =
-      DATA.experience.map(x => card(x, true)).join('') +
-      `<p class="sec-title">Education</p>` + DATA.education.map(x => card(x)).join('');
+      `<div class="tl"><p class="tl-lbl">Work</p>` +
+      exp.map((x, i) => i < 3 ? tlCard(x, '', depth(i)) : tlMini(x, depth(i))).join('') +
+      `<p class="tl-lbl edu">Education</p>` +
+      DATA.education.map((x, j) => tlCard(x, 'edu', depth(exp.length + j))).join('') +
+      `</div>`;
 
     document.getElementById('projects').innerHTML =
       `<div class="pgrid">` + DATA.projects.map(project).join('') + `</div>`;
   }
   render();
+
+  // experience timeline: expand a secondary role in place
+  document.getElementById('experience').addEventListener('click', e => {
+    const mini = e.target.closest('.tl-mini');
+    if(!mini) return;
+    const item = mini.closest('.tl-item');
+    const open = item.classList.toggle('open');
+    mini.setAttribute('aria-expanded', open);
+  });
 
   // auto-rotate every card carousel
   document.querySelectorAll('#projects .carousel').forEach(car => {
