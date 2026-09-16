@@ -79,7 +79,7 @@
     .open .exp-chev{transform:rotate(180deg);color:var(--accent)}
     .sx-item{border-top:1px solid var(--border)}
     .sx-item:first-of-type{border-top:none}
-    .sx-head{display:grid;grid-template-columns:180px 1fr;gap:28px;cursor:pointer;padding:20px 4px}
+    .sx-head{display:grid;grid-template-columns:180px 1fr;gap:28px;cursor:pointer;padding:15px 4px}
     .sx-left{display:flex;flex-direction:column;gap:4px;padding-top:2px}
     .sx-org{font-size:14px;font-weight:600;color:var(--accent);line-height:1.35}
     .sx-date{font-family:var(--mono);font-size:12px;color:var(--mute)}
@@ -87,7 +87,10 @@
     .sx-line{display:flex;align-items:baseline;gap:10px}
     .sx-role{font-size:17px;font-weight:600;color:var(--text)}
     .sx-line .exp-chev{margin-left:auto}
-    .sx-right .tags{margin-top:12px}
+    .sx-right .impact{font-size:14px;color:var(--dim);line-height:1.5;margin:5px 0 0;max-width:56ch}
+    .sx-right .impact b{color:var(--accent);font-weight:600}
+    .sx-right .tags{margin-top:10px}
+    .sx-right .tags span.ach{color:var(--accent);border-color:var(--accent);font-weight:500}
     .sx-item .exp-pad{padding:4px 2px 22px 208px}
     .sx-item:hover .sx-role{color:var(--accent)}
     @media(max-width:600px){.sx-head{grid-template-columns:1fr;gap:8px}.sx-item .exp-pad{padding-left:2px}}
@@ -100,7 +103,6 @@
     .exp-in li a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent-line);text-underline-offset:3px;transition:.15s}
     .exp-in li a:hover{color:var(--accent);text-decoration-color:var(--accent)}
     .exp-in li .en{font-size:13px}
-    .award{display:inline-block;font-family:var(--mono);font-size:13px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:8px;padding:5px 12px;margin-top:10px}
     .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
     .tags span{font-family:var(--mono);font-size:12px;color:var(--accent);background:var(--accent-soft);
       border:1px solid var(--accent-line);border-radius:7px;padding:3px 10px}
@@ -428,12 +430,28 @@
       </div>`;
 
     const roleH = x => `${x.role}${x.when ? ` <span class="when">${x.when}</span>` : ''}`;
-    const tagsHTML = x => x.tags?.length ? `<div class="tags">${x.tags.map(t => `<span>${t}</span>`).join('')}</div>` : '';
-    const bulletsAward = x => `${x.bullets?.length ? `<ul>${x.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : ''}${x.award ? `<div class="award">${x.award}</div>` : ''}`;
-    // company + date on the left, role + tags on the right; bullets expand in place
+    const bulletsHTML = x => x.bullets?.length ? `<ul>${x.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` : '';
+    // one-line highlight, shown only for the three most recent roles
+    const IMPACT = {
+      "Machine Learning Engineer": 'Building agentic AI systems now in production for <b>~100 internal users</b>.',
+      "Research Intern · 5G + AI": 'Applied ML through NWDAF in the 5G core and network slices, predicting upcoming events to reach <b>better QoS</b>.',
+      "Graduate Research Assistant": 'Built a computer-vision feeding system deployed across <b>7 fish farms</b>.'
+    };
+    const impactLine = x => IMPACT[x.role] ? `<p class="impact">${IMPACT[x.role]}</p>` : '';
+    // achievement badge sits inline in the tag row so it reads without expanding
+    const BADGE = {
+      "Research Intern · 5G + AI": '🏅 資策會 5G Jump · Honorable Mention',
+      "Graduate Research Assistant": '🎖 Patent · TWI892930'
+    };
+    const chips = x => {
+      const ach = BADGE[x.role] ? `<span class="ach">${BADGE[x.role]}</span>` : '';
+      const tags = x.tags?.length ? x.tags.map(t => `<span>${t}</span>`).join('') : '';
+      return (ach || tags) ? `<div class="tags">${ach}${tags}</div>` : '';
+    };
+    // company + date on the left, role + highlight + badge + tags on the right; bullets expand in place
     const sxRow = x => `<div class="sx-item">
-      <div class="sx-head"><span class="sx-left"><span class="sx-org">${x.org}</span><span class="sx-date">${x.date}</span></span><span class="sx-right"><span class="sx-line"><span class="sx-role">${roleH(x)}</span><span class="exp-chev">⌄</span></span>${tagsHTML(x)}</span></div>
-      <div class="exp-wrap"><div class="exp-in"><div class="exp-pad">${bulletsAward(x)}</div></div></div></div>`;
+      <div class="sx-head"><span class="sx-left"><span class="sx-org">${x.org}</span><span class="sx-date">${x.date}</span></span><span class="sx-right"><span class="sx-line"><span class="sx-role">${roleH(x)}</span><span class="exp-chev">⌄</span></span>${impactLine(x)}${chips(x)}</span></div>
+      <div class="exp-wrap"><div class="exp-in"><div class="exp-pad">${bulletsHTML(x)}</div></div></div></div>`;
     document.getElementById('experience').innerHTML =
       `<p class="exp-lbl">Work</p>` + DATA.experience.map(sxRow).join('') +
       `<p class="exp-lbl second">Education</p>` + DATA.education.map(sxRow).join('');
