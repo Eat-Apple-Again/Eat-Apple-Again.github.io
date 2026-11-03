@@ -427,7 +427,7 @@
         <a class="btn out" href="${p.links.github}" target="_blank">GitHub</a>
         <a class="btn out" href="${p.links.linkedin}" target="_blank">LinkedIn</a>
         ${p.links.email ? `<a class="btn out" href="mailto:${p.links.email}">Email</a>` : `<span class="btn out soon">Email</span>`}
-        ${p.links.resume ? `<a class="btn out" href="${p.links.resume}" target="_blank">Resume ↓</a>` : ''}
+        ${p.links.resume ? `<a class="btn out" href="${p.links.resume}" target="_blank">Resume</a>` : ''}
       </div>`;
 
     const roleH = x => `${x.role}${x.when ? ` <span class="when">${x.when}</span>` : ''}`;
