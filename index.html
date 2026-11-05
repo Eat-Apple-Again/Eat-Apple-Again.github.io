@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -177,7 +177,7 @@
   <div class="topbar">
     <div class="tb-in">
       <span class="tb-name" id="tbName"></span>
-      <button class="toggle" id="themeToggle"><span id="themeIcon">☾</span> <span id="themeLabel">dark</span></button>
+      <button class="toggle" id="themeToggle"><span id="themeIcon">☀</span> <span id="themeLabel">light</span></button>
     </div>
   </div>
   <div class="tabs">
@@ -555,7 +555,7 @@
   // 切換暗色和亮色
   const root = document.documentElement, icon = document.getElementById('themeIcon'), label = document.getElementById('themeLabel');
   function applyTheme(t){ root.dataset.theme = t; icon.textContent = t === 'dark' ? '☾' : '☀'; label.textContent = t; pc = themePC(); }
-  applyTheme(localStorage.getItem('theme') || 'dark');
+  applyTheme(localStorage.getItem('theme') || 'light');
   document.getElementById('themeToggle').addEventListener('click', () => {
     const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
     applyTheme(next); localStorage.setItem('theme', next);
